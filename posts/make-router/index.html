@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+
+    
+        <title>
+             お手軽！簡単！Linuxでルータを作る
+            
+        </title>
+
+        
+            <meta property="og:title" content="お手軽！簡単！Linuxでルータを作る" />
+        
+    
+
+    
+        
+    
+
+    
+        
+    
+
+    
+
+    
+
+    
+
+    
+    
+        <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    
+
+
+    
+        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@1,500&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+    
+
+    <link rel="stylesheet" type="text/css" media="screen" href=https://n-magi.github.io/css/main.css />
+
+    
+        <link
+            rel="stylesheet"
+            id="darkModeStyle"
+            type="text/css"
+            href=https://n-magi.github.io/css/dark.css
+            
+            
+                disabled
+            
+        />
+    
+
+    
+
+
+    
+    
+
+    
+    
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chokokutai&family=Palette+Mosaic&family=Rock+3D&family=WDXL+Lubrifont+JP+N&family=Yuji+Hentaigana+Akari&family=Yuji+Mai&display=swap" rel="stylesheet">
+
+    <!-- mermaid -->
+    <script src="/js/mermaid.min.js"></script>
+    <script>
+    mermaid.initialize({ startOnLoad: false, theme: 'dark' });
+    document.addEventListener('DOMContentLoaded', async () => {
+    const mermaidElements = document.querySelectorAll('.mermaid');
+
+    if (mermaidElements.length > 0) {
+        await mermaid.run({
+            nodes: mermaidElements
+        });
+    }
+    });
+    </script>
+    
+</head>
+
+
+<body>
+    <div class="content">
+        <header>
+    <a a href=https:&#x2F;&#x2F;n-magi.github.io&#x2F;>
+        <div class="main" id="main_title">
+            <img id="title_image" src="/imgs/1_2.png" alt="知恵の実" />
+            <img id="title_image_ate" src="/imgs/2_2.png" alt="知恵の実" />
+            <span id="title" class="wdxl-lubrifont-jp-n-regular">知恵の実</span>
+        </div>
+    </a>
+
+    <nav>
+        
+            <a href=&#x2F;>Home</a>
+        
+            <a href=&#x2F;posts>Posts</a>
+        
+            <a href=&#x2F;tags>Tags</a>
+        
+            <a href=&#x2F;about>About</a>
+        
+
+        
+
+        
+            | <a id="dark-mode-toggle" onclick="toggleTheme()" href=""></a>
+            <script src=https://n-magi.github.io/js/themetoggle.js></script>
+        
+    </nav>
+</header>
+
+
+        
+    
+<main>
+    <article>
+        <div class="title">
+            <h1 class="title">お手軽！簡単！Linuxでルータを作る</h1>
+            <div class="meta">
+                
+                on  2025-09-09
+
+                
+            </div>
+        </div>
+
+        
+
+        <section class="body">
+            <h2 id="gai-yao">概要</h2>
+<p>自宅の外向きネットワークを10Gにした<br />
+同時に10Gルータの購入を考えたが非常に高額であった為、既存PCを流用しルータを構成することにした</p>
+<h2 id="gou-cheng-huan-jing">構成環境</h2>
+<h3 id="supetuku">スペック</h3>
+<table><thead><tr><th>パーツ</th><th>コンポーネント</th><th>備考</th></tr></thead><tbody>
+<tr><td>CPU</td><td>i7-9700K</td><td>内、4vCPUを割り当て</td></tr>
+<tr><td>RAM</td><td>64GB</td><td>内、8GBを割り当て</td></tr>
+<tr><td>SSD</td><td>SATA 1TB</td><td></td></tr>
+<tr><td>NIC</td><td></td><td>pci pass-throughでVMに直接マウント</td></tr>
+<tr><td></td><td>X540-AT2</td><td>Intel製 2xRJ45</td></tr>
+<tr><td></td><td>560SFP+</td><td>HP製 2xSFP+</td></tr>
+</tbody></table>
+<h3 id="shi-yong-konponento">使用コンポーネント</h3>
+<table><thead><tr><th>機能</th><th>コンポーネント</th><th>備考</th></tr></thead><tbody>
+<tr><td>OS</td><td>Ubuntu</td><td>便利さにはかなわない</td></tr>
+<tr><td>DHCPC</td><td>wide-dhcpv6-client</td><td>NGNからのDHCPv6-PD用</td></tr>
+<tr><td>SLAAC</td><td>radvd</td><td>Stateless Address Autoconfiguration用</td></tr>
+<tr><td>firewall</td><td>nftables</td><td>firewallとルーティング</td></tr>
+<tr><td>DNS</td><td>unbound</td><td></td></tr>
+</tbody></table>
+<h3 id="wai-ce-netutowaku">外側ネットワーク</h3>
+<ul>
+<li>en光のxpass契約</li>
+<li>ipは固定</li>
+</ul>
+<h2 id="gou-zhu-noliu-re">構築の流れ</h2>
+<h3 id="osnoinsutoru">OSのインストール</h3>
+<p>こちらに関しては、基本技能。割愛。</p>
+<h3 id="ji-cun-nokonponentonogeng-xin-oyobishi-yong-surukonponentonoru-shou">既存のコンポーネントの更新および使用するコンポーネントの入手</h3>
+<ol>
+<li><code># apt update &amp;&amp; apt upgrade -y</code></li>
+<li><code># apt install -y wide-dhcpv6-client radvd unbound</code></li>
+</ol>
+<h3 id="ge-zhong-konponentonoshe-ding-toque-ren">各種コンポーネントの設定と確認</h3>
+<ul>
+<li>ネットワークインターフェースの割り当て名を確認する<br />
+<code>$ ip a</code><br />
+v6ネットワークがつながらないと話が始まらないのでDHCPCv6から始める</li>
+</ul>
+<h4 id="wide-dhcpv6-client">wide-dhcpv6-client</h4>
+<p>以下のように編集。説明書は<a href="https://manpages.debian.org/testing/wide-dhcpv6-client/dhcp6c.conf.5.en.html">ここ</a>。<br />
+尚、文中の<a href="https://datatracker.ietf.org/doc/html/rfc3633#section-9"><code>ia_id</code></a>を知りたい場合はリンクを参照</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>#/etc/wide-dhcpv6/dhcp6c.conf
+</span><span>
+</span><span># Default dhpc6c configuration: it assumes the address is autoconfigured using
+</span><span># router advertisements.
+</span><span>
+</span><span>profile default
+</span><span>{
+</span><span>  information-only;
+</span><span>
+</span><span>  request domain-name-servers;
+</span><span>  request domain-name;
+</span><span>
+</span><span>  script &quot;/etc/wide-dhcpv6/dhcp6c-script&quot;;
+</span><span>};
+</span><span>
+</span><span>interface ###PUT YOUR INTERFACE### {
+</span><span>    #このインターフェースでia_pdを送信する。
+</span><span>    #基本的にはここはNTTのONUに接続している端子を設定することになる
+</span><span>
+</span><span>        send ia-pd 0;
+</span><span>        #0番としてアドレスブロックの割り当てを要求する
+</span><span>        #ちなみにia_naもあるがこちらはia_Non_temporary_Addressの略
+</span><span>};
+</span><span>
+</span><span>id-assoc pd 0{
+</span><span>    #0番で受けたPDに対して対して以下を実行
+</span><span>        prefix-interface ####PUT YOUR INTERFACE ### {
+</span><span>            #受けたIDを指定のinterfaceに割り当て
+</span><span>            #基本的にはこちらは内側LANに接続しているインターフェースになる
+</span><span>
+</span><span>                sla-id 1;
+</span><span>                #割り当てを受けたアドレスに対して設定したid 1を付加して再配布させる
+</span><span>                #下の設定と合わせると再配布アドレスが以下のようになる
+</span><span>                #`2001:db8:ffff::/48` -&gt; `2001:db8:ffff:1::/64`
+</span><span>
+</span><span>                sla-len 8;
+</span><span>                #今回、SLAACによる自動アドレス設定に対応させるため
+</span><span>                #/64になるように長さを調節する。デフォルトでは/16が設定される
+</span><span>                #NTTからは光電話の契約が無い場合、/56で割り当てを受ける
+</span><span>                #今回は8を設定している
+</span><span>        };
+</span><span>};
+</span></code></pre>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>#/etc/default/wide-dhcpv6-client
+</span><span>
+</span><span># Defaults for dhcpv6 client initscript
+</span><span># Used by /etc/init.d/wide-dhcpv6-client
+</span><span>
+</span><span># Interfaces on which the client should send DHCPv6 requests and listen to
+</span><span># answers. If empty, the client is deactivated.
+</span><span>INTERFACES=&quot;####PUT YOUR INTERFACE####&quot;
+</span><span>#ia-pd sendを行う(DHCPCの動きをする)インターフェースを設定する
+</span><span>#基本的にはここはNTTのONUに接続している端子を設定することになる
+</span><span>
+</span><span># Verbose level for syslog. Default is 0 (0: minimal; 1: info; 2: debug)
+</span><span>#VERBOSE=0
+</span></code></pre>
+<h3 id="radvd">radvd</h3>
+<p>SLAACの設定をする</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>#/etc/radvd.conf
+</span><span>
+</span><span>interface ###LAN側インターフェース {
+</span><span>        AdvOtherConfigFlag on;
+</span><span>        AdvSendAdvert on;
+</span><span>        prefix ::/64 {
+</span><span>        #SLAACは/64で配布する必要がある
+</span><span>                AdvOnLink on;
+</span><span>                AdvAutonomous on;
+</span><span>        };
+</span><span>};
+</span></code></pre>
+<h3 id="unbound">unbound</h3>
+<p>en光からは、ipipトンネルの接続先情報がドメインとして届いている。接続させるために名前解決できる必要がある<br />
+加えて以下の制約がある</p>
+<ul>
+<li><code>ipv6</code>での名前解決ができること</li>
+</ul>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>#/etc/unbound/unbound.conf
+</span><span>
+</span><span>#include-toplevel: &quot;/etc/unbound/unbound.conf.d/*.conf&quot;
+</span><span>
+</span><span>server:
+</span><span>        interface: 0.0.0.0
+</span><span>        interface: ::
+</span><span>        interface: ::1
+</span><span>
+</span><span>        port: 53
+</span><span>        prefer-ip6: yes
+</span><span>        #適宜 access-controlで名前解決を受けるクライアントの範囲を設定すること
+</span><span>
+</span><span>        do-ip4: yes
+</span><span>        do-ip6: yes
+</span><span>        do-udp: yes
+</span><span>        do-tcp: yes
+</span></code></pre>
+<p>また、名前解決にunboundを使用するように設定を変更する</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>#/etc/systemd/resolved.conf
+</span><span>
+</span><span>[Resolve]
+</span><span>DNS=::1
+</span></code></pre>
+<p>Unboundと干渉する為、<code>systemd-resolved</code>を停止する<br />
+<code>sudo systemd stop systemd-resolved</code><br />
+<code>sudo systemd disable systemd-resolved</code></p>
+<h3 id="osshe-ding">OS設定</h3>
+<p>この時点でこの設定を行っているマシンを用いて<code>ipv6</code>インターネットに出れるはず<br />
+<code>ipv4</code> / <code>ipv6</code>ルーティングはデフォルトでは無効にされているため有効にする<br />
+以下のドキュメントを新規作成して、ルーティングを有効にする</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span># /etc/sysctl.d/10-routing.conf
+</span><span>
+</span><span># Uncomment the next line to enable packet forwarding for IPv4
+</span><span>net.ipv4.ip_forward=1
+</span><span>
+</span><span># Uncomment the next line to enable packet forwarding for IPv6
+</span><span>#  Enabling this option disables Stateless Address Autoconfiguration
+</span><span>#  based on Router Advertisements for this host
+</span><span>net.ipv6.conf.all.forwarding=1
+</span></code></pre>
+<p>この設定後再起動を行う。<br />
+<code>sudo shutdown -r now</code></p>
+<h3 id="nftables">nftables</h3>
+<p>ここでは、<code>firewall</code>, <code>IPマスカレード(NAPT)</code>, <code>DNAT</code>の設定を行う。<br />
+サーバ用途を考えてもいる為、いわゆるポート開放の設定も同時に行う<br />
+まずはデフォルト設定を退避させる<br />
+<code>cp /etc/nftables.conf /etc/nftables.conf.bak</code></p>
+<ul>
+<li>注意！！一部のフィルタ設定が適切に行われていない可能性がある。この設定は実際の設定ではなく必要な要素のみを抜き出して記載しているため必要な記載がない事がありうる</li>
+</ul>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>#/etc/nftables.conf
+</span><span>
+</span><span>#!/usr/sbin/nft -f
+</span><span>
+</span><span>flush ruleset
+</span><span>
+</span><span>define wan_addr = ###YOUR WAN ADDRESS
+</span><span>define wan_if = ###YOUR WAN INTERFACE
+</span><span>#LAN1
+</span><span>define lan1_if = ###YOUR LAN1 INTF
+</span><span>define lan1_addr = ###YOUR LAN1 ADDRESS
+</span><span>
+</span><span>
+</span><span>table ip f4 {
+</span><span>        chain input {
+</span><span>                type filter hook input priority 0; policy drop;
+</span><span>                ct state established,related counter accept;
+</span><span>                iif $lan1_if accept;
+</span><span>                iif &quot;lo&quot; accept;
+</span><span>
+</span><span>                log;
+</span><span>        }
+</span><span>
+</span><span>        chain forward {
+</span><span>                type filter hook forward priority 0; policy drop;
+</span><span>                
+</span><span>                tcp flags syn tcp option maxseg size set rt mtu;
+</span><span>                tcp flags rst tcp option maxseg size set rt mtu;
+</span><span>                #Path MTUの自動設定
+</span><span>                #(ip4ip6トンネルはtcp(ipv6パケット)のデータ部分にip4ヘッダが含めて送信する為、defaultの1460だとパケットが分割されてしまいベストな制御ができない)
+</span><span>                #この設定で受信パケットから経路における最大MTU値を自動的に設定するよう構成
+</span><span>
+</span><span>                ct state established,related counter accept;
+</span><span>                ip saddr ###lan1_address accept;
+</span><span>                ip saddr ###lan2_address accept;
+</span><span>                ip saddr ###lan3_address accept;
+</span><span>
+</span><span>                iif $lan1_if accept;
+</span><span>
+</span><span>                iif $wan_if jump if-tun0;
+</span><span>                iif &quot;lo&quot; accept;
+</span><span>                log;
+</span><span>
+</span><span>        }
+</span><span>
+</span><span>        chain output {
+</span><span>                type filter hook output priority 0; policy accept;
+</span><span>        }
+</span><span>
+</span><span>        chain if-tun0{
+</span><span>                tcp dport ###解放するポート accept;
+</span><span>
+</span><span>                drop;
+</span><span>        }
+</span><span>}
+</span><span>
+</span><span>table ip6 f6 {
+</span><span>        chain input{
+</span><span>                type filter hook input priority 0; policy drop;
+</span><span>                ct state established,related counter accept;
+</span><span>                icmpv6 type {1,2,3,4,128,129,133,134,135,136} accept;
+</span><span>                #ipv6からdhcp関係のパケットはicmpにまとめられたので当該部分を通すように設定
+</span><span>
+</span><span>                udp dport 546 ip6 saddr fe80::4e5d:3cff:fe8f:900b accept;
+</span><span>                #ONUのアドレス
+</span><span>                iif $lan1_if accept;
+</span><span>                iif &quot;lo&quot; accept;
+</span><span>        }
+</span><span>
+</span><span>        chain forward {
+</span><span>                type filter hook forward priority 0; policy accept;
+</span><span>                
+</span><span>                iif $lan1_if accept;
+</span><span>                iif &quot;lo&quot; accept;
+</span><span>                ct state established,related counter accept;
+</span><span>                icmpv6 type {1,2,3,4,128,129,133,134,135,136} accept;
+</span><span>                #ipv6からDHCP関係の通信がICMPv6にまとめられ為、名前解決関係を通すようにする
+</span><span>
+</span><span>                tcp flags syn tcp option maxseg size set rt mtu;
+</span><span>                tcp flags rst tcp option maxseg size set rt mtu;
+</span><span>                #path mtuの設定
+</span><span>                #本来ならいらないがほぼ気休めである
+</span><span>        }
+</span><span>
+</span><span>        chain output {
+</span><span>                type filter hook output priority 0; policy accept;
+</span><span>        }
+</span><span>
+</span><span>}
+</span><span>
+</span><span>table ip nat {
+</span><span>        chain postrouting {
+</span><span>            #NATの設定
+</span><span>            
+</span><span>                type nat hook postrouting priority 0;
+</span><span>                oif &quot;tun0&quot; masquerade;
+</span><span>                #NAPTの設定
+</span><span>
+</span><span>                iif $lan1_if ip daddr ###NAT先 tcp dport ###ポート番号 masquerade;
+</span><span>                #ヘアピンNATの設定
+</span><span>        }
+</span><span>        chain prerouting {
+</span><span>                type nat hook prerouting priority 0;
+</span><span>                ip daddr $wan_addr tcp dport ###ポート番号 dnat to ###NAT先;
+</span><span>                #ヘアピンNATの設定
+</span><span>                
+</span><span>                iif &quot;tun0&quot; tcp dport ###ポート番号 dnat to ###NAT先;
+</span><span>        }
+</span><span>}
+</span></code></pre>
+<h3 id="isptotonneruwozhang-ru">ISPとトンネルを張る</h3>
+<p>xpassの固定IP契約は<code>ip4ip6</code>トンネルを張ることで利用できるようになる<br />
+また、このインターフェースは再起動ごとに設定する必要があるため以下のスクリプトで纏めている</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span># tunnel.sh
+</span><span>
+</span><span>INTERFACE=&#39;###トンネルインターフェース&#39;
+</span><span>REMOTE=&#39;###ISP側アドレス&#39;
+</span><span>TUNNEL_NAME=&#39;###トンネルデバイス名&#39;
+</span><span>ADDRESS4=&#39;###割り当て固定IP&#39;
+</span><span>LOCAL=`ip address show $INTERFACE | grep &quot;global&quot; | awk &#39;{print $2}&#39; | awk -F/ &#39;{print $1}&#39;`
+</span><span>#IP6_LOCAL=`ip a show $INTERFACE | grep inet6 | awk &#39;{if(NR==1) print(substr($2,0,length($2)-3)) }&#39;`
+</span><span>
+</span><span>#Xpass Local Address Notification Secrets
+</span><span>BASIC_ID=&#39;###認証ID&#39;
+</span><span>BASIC_PW=&#39;###パスワード&#39;
+</span><span>DDNS_ID=&#39;###DDNSエンドポイント&#39;
+</span><span>DDNS_PW=&#39;###DDNSのパスワード&#39;
+</span><span>
+</span><span>sudo systemctl stop nftables
+</span><span>
+</span><span>echo &quot;Create Tunnel Device&quot;
+</span><span>sudo ip -6 tunnel add &quot;$TUNNEL_NAME&quot; mode ip4ip6 remote &quot;$REMOTE&quot; local &quot;$LOCAL&quot; encaplimit none dev &quot;$INTERFACE&quot;
+</span><span>
+</span><span>echo &quot;Set Activate Tunnel Device&quot;
+</span><span>sudo ip link set dev &quot;$TUNNEL_NAME&quot; up
+</span><span>
+</span><span>sudo ip address add dev &quot;$TUNNEL_NAME&quot; &quot;$ADDRESS4&quot;
+</span><span>sudo ip route delete default
+</span><span>sudo ip route add default dev &quot;$TUNNEL_NAME&quot;
+</span><span>
+</span><span>echo &quot;Start Xpass Authentication&quot;
+</span><span>sudo curl --insecure -u $BASIC_ID:$BASIC_PW &quot;https://ddnsweb1.ddns.vbbnet.jp/cgi-bin/ddns_api.cgi?d=4prgyn.v4v6.xpass.jp&amp;p=$DDNS_PW&amp;a=$LOCAL&amp;u=$DDNS_ID&quot;
+</span><span>
+</span><span>sudo systemctl start nftables
+</span><span>
+</span></code></pre>
+<h2 id="zhu-yi-shi-xiang">注意事項</h2>
+<p>(後学のために)可能な限り設定の説明を含めるようにしているが正確性に関しては読む人自身の自己判断にしたい<br />
+また間違えを見つけた場合・解釈が違う場合はGithub上の当ページのリポジトリにissueを残すことで世界から間違いが一つ減る</p>
+
+        </section>
+
+        
+            <div class="post-tags">
+                <nav class="nav tags">
+                    <ul class="tags">
+                        
+                            <li><a href=https://n-magi.github.io/tags/memo/>memo</a></li>
+                        
+                            <li><a href=https://n-magi.github.io/tags/network/>network</a></li>
+                        
+                            <li><a href=https://n-magi.github.io/tags/router/>router</a></li>
+                        
+                            <li><a href=https://n-magi.github.io/tags/tech/>tech</a></li>
+                        
+                    </ul>
+                </nav>
+            </div>
+        
+
+    </article>
+</main>
+
+
+
+        <footer>
+  <div style="display:flex">
+    
+        <a class="soc" href=https:&#x2F;&#x2F;github.com&#x2F;N-Magi title=GitHub>
+            <i data-feather=github></i>
+        </a>
+    
+        <a class="soc" href=https:&#x2F;&#x2F;x.com&#x2F;_N_Magi title=X>
+            <i data-feather=twitter></i>
+        </a>
+    
+  </div>
+  <div class="footer-info">
+    2025 © n_magi(a.k.a. Makimagi(c)a)  | <a
+      href="https://github.com/XXXMrG/archie-zola">Archie-Zola Theme</a>
+  </div>
+</footer>
+
+
+<script>
+    feather.replace();
+</script>
+
+
+    </div>
+</body>
+
+</html>

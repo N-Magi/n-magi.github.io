@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+
+    
+        <title>
+             写真における情報量の話
+            
+        </title>
+
+        
+            <meta property="og:title" content="写真における情報量の話" />
+        
+    
+
+    
+        
+    
+
+    
+        
+    
+
+    
+
+    
+
+    
+
+    
+    
+        <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    
+
+
+    
+        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@1,500&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+    
+
+    <link rel="stylesheet" type="text/css" media="screen" href=https://n-magi.github.io/css/main.css />
+
+    
+        <link
+            rel="stylesheet"
+            id="darkModeStyle"
+            type="text/css"
+            href=https://n-magi.github.io/css/dark.css
+            
+            
+                disabled
+            
+        />
+    
+
+    
+
+
+    
+    
+
+    
+    
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chokokutai&family=Palette+Mosaic&family=Rock+3D&family=WDXL+Lubrifont+JP+N&family=Yuji+Hentaigana+Akari&family=Yuji+Mai&display=swap" rel="stylesheet">
+
+    <!-- mermaid -->
+    <script src="/js/mermaid.min.js"></script>
+    <script>
+    mermaid.initialize({ startOnLoad: false, theme: 'dark' });
+    document.addEventListener('DOMContentLoaded', async () => {
+    const mermaidElements = document.querySelectorAll('.mermaid');
+
+    if (mermaidElements.length > 0) {
+        await mermaid.run({
+            nodes: mermaidElements
+        });
+    }
+    });
+    </script>
+    
+</head>
+
+
+<body>
+    <div class="content">
+        <header>
+    <a a href=https:&#x2F;&#x2F;n-magi.github.io&#x2F;>
+        <div class="main" id="main_title">
+            <img id="title_image" src="/imgs/1_2.png" alt="知恵の実" />
+            <img id="title_image_ate" src="/imgs/2_2.png" alt="知恵の実" />
+            <span id="title" class="wdxl-lubrifont-jp-n-regular">知恵の実</span>
+        </div>
+    </a>
+
+    <nav>
+        
+            <a href=&#x2F;>Home</a>
+        
+            <a href=&#x2F;posts>Posts</a>
+        
+            <a href=&#x2F;tags>Tags</a>
+        
+            <a href=&#x2F;about>About</a>
+        
+
+        
+
+        
+            | <a id="dark-mode-toggle" onclick="toggleTheme()" href=""></a>
+            <script src=https://n-magi.github.io/js/themetoggle.js></script>
+        
+    </nav>
+</header>
+
+
+        
+    
+<main>
+    <article>
+        <div class="title">
+            <h1 class="title">写真における情報量の話</h1>
+            <div class="meta">
+                
+                on  2025-11-05
+
+                
+            </div>
+        </div>
+
+        
+
+        <section class="body">
+            <h2 id="gai-yao">概要</h2>
+<p>写真において時々<code>情報量</code>という概念で写真の良しあしを決められることがある。
+この記事では写真における<code>情報量</code>について、思考実験的に考えてみたいと思う。<br />
+またこの文章における情報量とは、写真に含まれる視覚的要素の数や密度、そしてそれらが鑑賞者に与える意味の可能性の広がりを指す。<br />
+なお、最終的な結論は特に面白みがないものになるためあらかじめここで注意しておく。</p>
+<h2 id="xie-zhen-niokeruqing-bao-liang">写真における情報量</h2>
+<p>一枚の写真から与えられる情報には何があるだろうか。ポートレート写真であれば、人の顔/服装/体形等が与えられるだろう。<br />
+情報とは写真の描写から直接的に読み取れる<code>カメラ空間</code>における一連の<code>事柄</code>である。<br />
+また一連の<code>事柄</code>からストーリー(物語)を語ることもできよう。<br />
+例えば、以下が写っていたとして話が連想(オマージュであると理解)できるだろうか。おそらく<strong>無理</strong>だろう。</p>
+<ul>
+<li>ハンバーガー</li>
+<li>M1911</li>
+<li>ラフな格好した人物</li>
+<li>スーツを着た人物</li>
+<li>ソファーに寝そべる人物</li>
+<li>冷蔵庫をあさるスーツを着た長髪の人物</li>
+</ul>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>「なんのハンバーガだ？」
+</span><span>「あぁ・・・　チーズバーガーだ」
+</span><span>「どこで買ったかを聞いてるんだよ。マクドナルドかウェンディーズかジャックインザボッスクか」
+</span><span>「あぁ・・・　ビックカフナバーガーだ」
+</span><span>「ビックカフナバーガー。ハワイヤンバーガーの店だろ？あそこのバーガーうまいんだってな？俺は食ったことねーけどどうだ？」
+</span><span>「うまいよ」
+</span></code></pre>
+<p>私は持っている知識で、その後連想が可能な要素を可能な限り散りばめた。しかし、要素を無限に詰め込むことはできない。<br />
+そのためある程度、鑑賞者が持つ<code>共有コンテキスト</code>を使用する必要があった。<br />
+鑑賞者の完全な理解を望むなら、ここで"内輪ネタ"にならないように気を付けるべきだった</p>
+<blockquote>
+<p>先の例は、映画「パルプ・フィクション」の1シーンである。<br />
+しかし、映画を見てない人(共有コンテキストが無い人)には何のことかサッパリわからない。</p>
+</blockquote>
+<h2 id="qing-bao-liang-toxie-zhen-noliang-sie-si">情報量と写真の良し悪し</h2>
+<p>情報量の多少とその写真について定性的に思考実験してみたいと思う。<br />
+※あくまでも個人の感想になる。注意されたし</p>
+<h3 id="qing-bao-liang-gashao-nasugiruchang-he">情報量が少なすぎる場合</h3>
+<p>情報量が少なすぎる写真を考える。
+まずは画面が一色の「白」の写真を考える。<br />
+この写真から得られる情報から考える事をいかに書き出す</p>
+<ul>
+<li>ミスプリ？</li>
+<li>わざと？</li>
+<li>長時間露光ですべては白一色である(写真の時間積分は1である？)</li>
+<li>構図・主題などを選定することに対するアンチテーゼ？</li>
+</ul>
+<p>これを分解し特定の解釈(意味)に落とし込むためには、文脈(<code>共有コンテキスト</code>)が必要になる。<br />
+(あなたはどんな文脈を思い浮かべた？)</p>
+<ul>
+<li>ミスプリ？
+<ul>
+<li>家の机に無造作に置かれていた</li>
+</ul>
+</li>
+<li>露光時間が長すぎて、すべての情報が平均化されて白になった
+<ul>
+<li>長時間露光をメインに集めた写真展出している</li>
+</ul>
+</li>
+<li>構図・主題などを選定することに対するアンチテーゼ？
+<ul>
+<li>抽象写真・現代写真がメインに集められた写真展に出ていた</li>
+</ul>
+</li>
+</ul>
+<p>ここで問う。<strong>これはどんな写真か？</strong><br />
+この写真を見たときに鑑賞者がどう受け取るか<br />
+鑑賞者が「なにこれ？」と思い意味を考えた瞬間、鑑賞者の人生を材料に作品が鑑賞者の中で完成する。<br />
+(※大概の鑑賞者は「なにこれ？」と思った瞬間に思考を停止し、何も考えない。と思う)<br />
+人生は十人十色であり、人それぞれ異なる。そのためその写真から得られる物語は発散する。
+(<strong>全く同じ感想を持つことはない</strong>だろう。)<br />
+(ある意味言葉の選択性よって同じ言葉が出るかもしれないが。)</p>
+<h3 id="qing-bao-liang-gaduo-sugiruchang-he">情報量が多すぎる場合</h3>
+<p>何が見せたいのかがわからない写真を思い浮かべてほしい。<br />
+人によって目がひきつけられるものは異なるので、要素同士の物語性は発散する<br />
+要素の大きさ・明るさ・彩度などによって写真内の要素に優劣をつけることで物語性をある程度、誘導可能だろう<br />
+しかし情報量が多い場合、その優劣の差は必然的に小さくなる。結果、物語性の誘導力も限られる。<br />
+どっちにしろ物語性は発散する。(<strong>全く同じ感想を持つことはない</strong>)</p>
+<h2 id="tumari">つまり？</h2>
+<p>一枚の写真に込められる情報の量には限界がある。多く詰め込んでも物語性は発散するし、少なくても発散する。<br />
+発散させることが目的ならそれも一つの美学であるが、物語性を伝いたい場合は、<br />
+<em>「鑑賞者の視線が迷わず、かつ一義的すぎない程度に情報が整理されている状態。主題が明確でありながら、余白や余韻が残る構成」</em><br />
+つまり<strong>中庸</strong>であることが大切である。その見極め方としては以下のものがあろう。</p>
+<ul>
+<li>要素の数や配置が、主題を支える構造になっているか。</li>
+<li>鑑賞者の視線がどこに向かうかを意識して設計されているか。(多くの場合は主題に向くことになると思う)</li>
+<li>情報の密度が、鑑賞者の文脈に依存しすぎず、ある程度普遍性を持っているか。(内輪ネタになりすぎない)</li>
+</ul>
+<p>人によってその実現度合いは異なる。この"度合い"が作家性の一翼を担っているのだろう。</p>
+<h2 id="zui-hou-ni">最後に</h2>
+<p>シンプルな写真が最近流行っているように思う。<br />
+賢明な紳士淑女諸君は以下のセリフは耳にタコができるまで聞いているだろう。</p>
+<ul>
+<li>「写真は引き算だ」</li>
+<li>「シンプルに」</li>
+</ul>
+<p>この考え方を応用すると、「物語性の方向性がつけやすくなるから」とすぐにわかる。<br />
+(その解釈はお任せしたい。人によって異なる部分になるので)</p>
+
+        </section>
+
+        
+            <div class="post-tags">
+                <nav class="nav tags">
+                    <ul class="tags">
+                        
+                            <li><a href=https://n-magi.github.io/tags/zhe-xue/>哲学</a></li>
+                        
+                            <li><a href=https://n-magi.github.io/tags/xie-zhen/>写真</a></li>
+                        
+                            <li><a href=https://n-magi.github.io/tags/photograph/>photograph</a></li>
+                        
+                            <li><a href=https://n-magi.github.io/tags/camera/>camera</a></li>
+                        
+                            <li><a href=https://n-magi.github.io/tags/poemu/>ポエム</a></li>
+                        
+                    </ul>
+                </nav>
+            </div>
+        
+
+    </article>
+</main>
+
+
+
+        <footer>
+  <div style="display:flex">
+    
+        <a class="soc" href=https:&#x2F;&#x2F;github.com&#x2F;N-Magi title=GitHub>
+            <i data-feather=github></i>
+        </a>
+    
+        <a class="soc" href=https:&#x2F;&#x2F;x.com&#x2F;_N_Magi title=X>
+            <i data-feather=twitter></i>
+        </a>
+    
+  </div>
+  <div class="footer-info">
+    2025 © n_magi(a.k.a. Makimagi(c)a)  | <a
+      href="https://github.com/XXXMrG/archie-zola">Archie-Zola Theme</a>
+  </div>
+</footer>
+
+
+<script>
+    feather.replace();
+</script>
+
+
+    </div>
+</body>
+
+</html>
