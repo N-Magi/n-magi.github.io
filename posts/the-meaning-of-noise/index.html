@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+
+    
+        <title>
+             写真におけるノイズの意味
+            
+        </title>
+
+        
+            <meta property="og:title" content="写真におけるノイズの意味" />
+        
+    
+
+    
+        
+    
+
+    
+        
+    
+
+    
+
+    
+
+    
+
+    
+    
+        <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    
+
+
+    
+        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@1,500&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+    
+
+    <link rel="stylesheet" type="text/css" media="screen" href=https://n-magi.github.io/css/main.css />
+
+    
+        <link
+            rel="stylesheet"
+            id="darkModeStyle"
+            type="text/css"
+            href=https://n-magi.github.io/css/dark.css
+            
+            
+                disabled
+            
+        />
+    
+
+    
+
+
+    
+    
+
+    
+    
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chokokutai&family=Palette+Mosaic&family=Rock+3D&family=WDXL+Lubrifont+JP+N&family=Yuji+Hentaigana+Akari&family=Yuji+Mai&display=swap" rel="stylesheet">
+
+    <!-- mermaid -->
+    <script src="/js/mermaid.min.js"></script>
+    <script>
+    mermaid.initialize({ startOnLoad: false, theme: 'dark' });
+    document.addEventListener('DOMContentLoaded', async () => {
+    const mermaidElements = document.querySelectorAll('.mermaid');
+
+    if (mermaidElements.length > 0) {
+        await mermaid.run({
+            nodes: mermaidElements
+        });
+    }
+    });
+    </script>
+    
+</head>
+
+
+<body>
+    <div class="content">
+        <header>
+    <a a href=https:&#x2F;&#x2F;n-magi.github.io&#x2F;>
+        <div class="main" id="main_title">
+            <img id="title_image" src="/imgs/1_2.png" alt="知恵の実" />
+            <img id="title_image_ate" src="/imgs/2_2.png" alt="知恵の実" />
+            <span id="title" class="wdxl-lubrifont-jp-n-regular">知恵の実</span>
+        </div>
+    </a>
+
+    <nav>
+        
+            <a href=&#x2F;>Home</a>
+        
+            <a href=&#x2F;posts>Posts</a>
+        
+            <a href=&#x2F;tags>Tags</a>
+        
+            <a href=&#x2F;about>About</a>
+        
+
+        
+
+        
+            | <a id="dark-mode-toggle" onclick="toggleTheme()" href=""></a>
+            <script src=https://n-magi.github.io/js/themetoggle.js></script>
+        
+    </nav>
+</header>
+
+
+        
+    
+<main>
+    <article>
+        <div class="title">
+            <h1 class="title">写真におけるノイズの意味</h1>
+            <div class="meta">
+                
+                on  2026-06-14
+
+                
+            </div>
+        </div>
+
+        
+
+        <section class="body">
+            <h1 id="xie-zhen-niokerunoizunoyou-lai-toxiao-guo">写真におけるノイズの由来と効果</h1>
+<h2 id="qian-shu-ki">前書き</h2>
+<p>私はノイズだらけの写真が大好きである。ノイズが無ければ物足りないとすら思っている。</p>
+<p>どれもこれもすべてM型Leicaを買ったからである。　M型Leicaには発想としてノイズも写真の一部であると考えていると思われる節がある。</p>
+<p>私は最初はNikon D7200から始め次にZ9を買い、M型Leicaに移っていった。<br />
+※今はZ9は無くZfになってる模様</p>
+<p>Z9の頃まではノイズは倒すべき相手であり、できる限り出さないようSSを開けたり手ブレさせないようにしたりと努力をしていた。</p>
+<p>その私が、M型Leicaを使って3か月でノイズ中毒(ノイズジャンキー)と化してしまった。何が私をそうさせたのか、話をしたいと思う。</p>
+<h2 id="noizunoding-yi">ノイズの定義</h2>
+<p>今更だが、この記事内におけるノイズの定義をする。
+主に以下の意で使われる同語だが主に後者の意味で使う。</p>
+<ul>
+<li>本筋からそれる余計な情報。</li>
+<li><strong>ある信号に対する雑音。</strong></li>
+</ul>
+<h2 id="noizunowu-li-de-shuo-ming">ノイズの物理的説明</h2>
+<p>フィルム時代とデジタル時代でノイズの正体は若干異なる。</p>
+<p>※著者は電子工学に対してのみ明るく、化学は弱いためフィルムの詳細な説明は許してほしい。</p>
+<h3 id="huirumushi-dai-niokerunoizu">フィルム時代におけるノイズ</h3>
+<p>フィルムはハロゲン化銀が含まれた感光材を塗布したフィルムもしくはガラス・銀板に対して一定時間露光を行い、化学変化により明暗の情報を記録する。<br />
+現像プロセスにより、現像液に触れた場合にハロゲン化銀に対して新たに銀が付着することでよりコントラストの強い画が得られる。<br />
+この吸着のムラや粒が「粒子感」として印画紙に現れる。</p>
+<h3 id="dezitarushi-dai-niokerunoizu">デジタル時代におけるノイズ</h3>
+<h4 id="dezitarunoiroha">デジタルのイロハ</h4>
+<p>デジタル時代では、<code>フォトダイオード(PD)</code>の集合体がセンサーとして用いられる。</p>
+<p><code>PD</code>に対してフォトンが入射するとある量の電荷を生じる(光電効果)ので電荷をコンデンサに蓄えさせる。</p>
+<p>読み出す際にコンデンサと読み出し用の<code>DigitalAnalogConverter(DAC)</code>を電気的に接続し電荷を移動させる。</p>
+<p><code>DAC</code>は生じた電圧をデジタル量へと量子化する装置である。デジタル量の分解能として<code>bit</code>がある<br />
+(※これが主にカメラで言う14/16bit云々である)</p>
+<p>この操作を各画素ごとに繰り返し、読み出しを行う。</p>
+<p><code>DAC</code>に対して電圧を知らせる仕組みによって<code>CMOS</code>だったり<code>CCD</code>だったり名前が変わる。</p>
+<p>低照度の場合、電圧が小さくなってしまいデータをうまく取得できないため増幅回路が<code>DAC</code>とセンサーの間にアッテネーター(アンプ)が介在する。</p>
+<h4 id="dezitarunoizunoiroha">デジタルノイズのイロハ</h4>
+<p>ここからやっとノイズの話を始める。</p>
+<p>デジタルで問題になるノイズには主に以下のノイズがある。</p>
+<ul>
+<li>熱雑音</li>
+<li>量子化誤差</li>
+</ul>
+<h5 id="re-za-yin">熱雑音</h5>
+<p><code>DAC</code>を用いる場合、最大の問題になるのが熱雑音である。熱雑音はすべての周波数帯域で一定の大きさを持つ。<br />
+この熱雑音(<code>Noise</code>)と信号(<code>Signal</code>)の電力を比率に取ったのを<code>S/N比(SNR)</code>と呼ぶ。\</p>
+<p>最小信号と最大信号の大きさの違いが<code>DynamicRange(DR)</code>である。<code>High Dynamic Range(HDR)</code>はこの<code>DR</code>が高いということである。</p>
+<p>また、信号として最小の大きさは熱雑音と同じ大きさかそれよりも少し大きい値になる。(※簡単にするためにスプリアスなどは考慮しないものとする。)</p>
+<p>この前提では、<code>SNR</code>≒<code>DR</code>とも言える。</p>
+<p>夜間などで、このに入力される最大信号が小さい場合<code>SNR</code>は悪化する。結果、熱雑音の大きさもろに影響するというわけである。</p>
+<p>また、暗部(信号が小さい領域)における熱雑音が相対的に大きくなり、写真のノイズが発生する。</p>
+<h5 id="liang-zi-hua-wu-chai">量子化誤差</h5>
+<p>量子化誤差は、その名の通り量子化(アナログ値をデジタルに変換する処理)を実施した場合に発生する誤差になる</p>
+<blockquote>
+<p>例えば仮に 「1.569」という数字があった時に「1」,「2」,「3」,「4」といった整数のみ受け付けられるシステムがあったとする。この時、「1.569」は四捨五入\切上\切下されて「2」もしくは「1」となる。結果真の値「1.569」とは「0.431」,「0.569」の差が生じてしまうというわけだ。　この差を「量子化誤差」と呼ぶ</p>
+</blockquote>
+<p>量子化誤差では、<code>14bit</code>で出力の場合、最大で発生する誤差は小さく、<code>DR</code>を計算した場合<code>84db</code>相当になる。<br />
+DxOが実施してるベンチマークによるとカメラの<code>DR</code>は最大で<code>48dB</code>とのこと。<br />
+その為 <code>48dB</code> &lt; <code>84dB</code>より大分大きさが大きいため量子化誤差が主たる要因ではないと考えられる。</p>
+<p>デジタルにおけるノイズは熱雑音が支配的であろう。</p>
+<p>※実は熱雑音は低減させることが可能である。熱雑音はボルツマン定数に対して<code>温度</code>・<code>帯域幅</code>を掛けた形で発生する。そのため温度を低くすることで熱雑音を抑えることができる</p>
+<h2 id="noizunoxiao-guo">ノイズの効果</h2>
+<p>ここからはノイズが誘発する感情面について記載する。
+私は、ノイズには以下の"効能"があると思う。</p>
+<h3 id="nosutaruzituku-xiang-chou-noxiang-qi">ノスタルジック(郷愁の想起)</h3>
+<p>アナログという語彙を聞いて何を思うだろうか。大半は「時代遅れの」という意味を想起すると思う。\</p>
+<blockquote>
+<p>時代遅れ的な意味を持つのは「アナクロ」だが語感が似ているので誤用されたのだろう。VHF帯におる地上アナログ放送の切り替えといったところも影響を持っているのだろうとは思う</p>
+</blockquote>
+<p>フィルム写真はノイジーでDRが狭いものとといった認識を持っており、
+フィルム写真はデジタル写真の前に使用されていた前時代的なものであるといった認識を持っている。
+その結果、写真が持つ粒子感には1,2世代前の写真であるといった感情を私に想起させる。</p>
+<h3 id="bokasi">ぼかし</h3>
+<p>ノイズにより1画素あたりの色の均質度が崩れ、およそ明るい部分と暗い部分とでその境目が曖昧になる。<br />
+光はいきなり明るい面になるのではなくその境目でグラデーションを発生させている。<br />
+ノイズの大きさによっては、隣との差がわかりづらくなる場合がある。<br />
+この時、差がわからない為近づいた場合には粒子のみ確認できる。しかし、一度離れてみると全体の傾向として写っているものが理解る(わかる)ようになる。<br />
+この効果は絵画的にはおそらく<code>印象派</code>の<code>点描</code>に近いものがあると私は思う。</p>
+<h3 id="wu-zhi-gan">物質感</h3>
+<p>コンクリート等の表面が粗い物体に斜光を入射するとその影が発生する。<br />
+その影は小さいが色のコントラストとして我々はそれに触れ、<code>「ザラザラ」</code>してると認識する。<br />
+この時、この表面の写真を撮った場合も同様に<code>「ざらざら」</code>しているコンクリートの写真だ。このコンクリートは<code>「ザラザラ」</code>してたなと思い出す。<br />
+そして、<code>「ざらざら」</code>を<code>「ザラザラ」</code>と学習する。といった形だ。</p>
+<h2 id="noizunituite">ノイズについて</h2>
+<p>私はノイズの<code>ぼかし</code>性に惹かれているのだと思う。</p>
+<h2 id="atogaki">あとがき</h2>
+<p>デジタルのノイズに対する解像度がヤケに高いね。わるい癖だね。</p>
+
+        </section>
+
+        
+            <div class="post-tags">
+                <nav class="nav tags">
+                    <ul class="tags">
+                        
+                            <li><a href=https://n-magi.github.io/tags/zhe-xue/>哲学</a></li>
+                        
+                            <li><a href=https://n-magi.github.io/tags/xie-zhen/>写真</a></li>
+                        
+                            <li><a href=https://n-magi.github.io/tags/photograph/>photograph</a></li>
+                        
+                            <li><a href=https://n-magi.github.io/tags/camera/>camera</a></li>
+                        
+                            <li><a href=https://n-magi.github.io/tags/poemu/>ポエム</a></li>
+                        
+                    </ul>
+                </nav>
+            </div>
+        
+
+    </article>
+</main>
+
+
+
+        <footer>
+  <div style="display:flex">
+    
+        <a class="soc" href=https:&#x2F;&#x2F;github.com&#x2F;N-Magi title=GitHub>
+            <i data-feather=github></i>
+        </a>
+    
+        <a class="soc" href=https:&#x2F;&#x2F;x.com&#x2F;_N_Magi title=X>
+            <i data-feather=twitter></i>
+        </a>
+    
+  </div>
+  <div class="footer-info">
+    2026 © n_magi(a.k.a. Makimagi(c)a)  | <a
+      href="https://github.com/XXXMrG/archie-zola">Archie-Zola Theme</a>
+  </div>
+</footer>
+
+
+<script>
+    feather.replace();
+</script>
+
+
+    </div>
+</body>
+
+</html>
